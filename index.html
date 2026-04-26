@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhysicsBit — JEE Physics by a 99%ile Scorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07090F;
+  --surface: #0D1420;
+  --surface2: #121B2E;
+  --accent: #00C8F0;
+  --accent2: #FFB020;
+  --text: #E8EEF8;
+  --muted: #5E7294;
+  --border: rgba(255,255,255,0.07);
+  --glow: rgba(0,200,240,0.15);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-weight:400;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:0 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
+  background:rgba(7,9,15,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;
+  font-weight:700;
+  letter-spacing:-0.02em;
+  color:var(--text);
+}
+.logo span{color:var(--accent)}
+nav ul{display:flex;list-style:none;gap:2rem}
+nav a{
+  color:var(--muted);font-size:0.875rem;text-decoration:none;
+  transition:color 0.2s;letter-spacing:0.02em;
+}
+nav a:hover{color:var(--text)}
+.nav-cta{
+  background:var(--accent);color:#07090F!important;
+  padding:0.45rem 1.2rem;border-radius:4px;
+  font-weight:500;font-size:0.875rem;transition:opacity 0.2s!important;
+}
+.nav-cta:hover{opacity:0.85!important;color:#07090F!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--text);transition:all 0.3s}
+
+/* CANVAS BG */
+#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.4;pointer-events:none}
+
+/* HERO */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:120px 5% 80px;
+  max-width:1200px;margin:0 auto;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(0,200,240,0.1);
+  border:1px solid rgba(0,200,240,0.3);
+  border-radius:2px;
+  padding:0.35rem 0.9rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.75rem;
+  color:var(--accent);
+  letter-spacing:0.05em;
+  margin-bottom:2rem;
+  width:fit-content;
+}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.8rem,6vw,5rem);
+  font-weight:700;
+  line-height:1.05;
+  letter-spacing:-0.03em;
+  margin-bottom:1.5rem;
+  max-width:780px;
+}
+h1 em{
+  font-style:italic;
+  color:var(--accent);
+}
+.hero-sub{
+  font-size:1.125rem;
+  color:var(--muted);
+  max-width:560px;
+  line-height:1.75;
+  margin-bottom:2.5rem;
+}
+.hero-sub strong{color:var(--text);font-weight:500}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{
+  background:var(--accent);
+  color:#07090F;
+  padding:0.85rem 2rem;
+  border-radius:4px;
+  font-weight:500;
+  font-size:1rem;
+  text-decoration:none;
+  transition:all 0.2s;
+  letter-spacing:0.01em;
+}
+.btn-primary:hover{background:#33D4F5;transform:translateY(-1px)}
+.btn-secondary{
+  background:transparent;
+  color:var(--text);
+  padding:0.85rem 2rem;
+  border-radius:4px;
+  border:1px solid var(--border);
+  font-size:1rem;
+  text-decoration:none;
+  transition:all 0.2s;
+}
+.btn-secondary:hover{border-color:var(--muted);transform:translateY(-1px)}
+.hero-stats{
+  display:flex;gap:3rem;margin-top:4rem;padding-top:3rem;
+  border-top:1px solid var(--border);
+  flex-wrap:wrap;
+}
+.stat-item{}
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;font-weight:700;
+  color:var(--text);line-height:1;
+  margin-bottom:0.3rem;
+}
+.stat-num span{color:var(--accent);font-size:1.5rem}
+.stat-label{font-size:0.8rem;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase}
+
+/* SECTIONS */
+section{position:relative;z-index:1;padding:100px 5%}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem;letter-spacing:0.12em;
+  color:var(--accent);text-transform:uppercase;
+  margin-bottom:1rem;display:block;
+}
+h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:700;letter-spacing:-0.02em;
+  line-height:1.1;margin-bottom:1.25rem;
+}
+.section-lead{font-size:1.1rem;color:var(--muted);max-width:600px;line-height:1.75;margin-bottom:3.5rem}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-img{
+  position:relative;
+}
+.about-frame{
+  width:100%;aspect-ratio:4/5;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.about-frame-inner{
+  width:80%;height:80%;
+  background:linear-gradient(135deg,var(--surface2),rgba(0,200,240,0.05));
+  border-radius:2px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1rem;
+}
+.avatar-circle{
+  width:100px;height:100px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(0,200,240,0.3),rgba(0,200,240,0.05));
+  border:1px solid rgba(0,200,240,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;font-weight:700;
+  color:var(--accent);
+}
+.frame-label{font-size:0.8rem;color:var(--muted);text-align:center;line-height:1.5}
+.score-badge{
+  position:absolute;bottom:-16px;right:-16px;
+  background:var(--accent);color:#07090F;
+  padding:0.75rem 1.25rem;border-radius:4px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.75rem;font-weight:600;
+  line-height:1.4;text-align:center;
+}
+.about-content h2{margin-bottom:1rem}
+.about-content p{color:var(--muted);line-height:1.85;margin-bottom:1.25rem;font-size:1rem}
+.about-content p strong{color:var(--text);font-weight:500}
+.credential-list{list-style:none;margin-top:2rem;display:flex;flex-direction:column;gap:0.75rem}
+.credential-list li{
+  display:flex;align-items:flex-start;gap:0.75rem;
+  font-size:0.9rem;color:var(--muted);
+}
+.credential-list li::before{
+  content:'→';color:var(--accent);flex-shrink:0;margin-top:1px;
+}
+
+/* WHAT YOU GET */
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:4px;
+  overflow:hidden;
+}
+.feature-card{
+  background:var(--surface);
+  padding:2rem;
+  transition:background 0.3s;
+}
+.feature-card:hover{background:var(--surface2)}
+.feature-icon{
+  width:40px;height:40px;
+  background:rgba(0,200,240,0.1);
+  border:1px solid rgba(0,200,240,0.2);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.25rem;
+  font-size:1.1rem;
+}
+.feature-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:600;
+  margin-bottom:0.6rem;letter-spacing:-0.01em;
+}
+.feature-card p{font-size:0.875rem;color:var(--muted);line-height:1.7}
+
+/* BATCHES */
+.batches-section{background:var(--surface)}
+.batches-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.batch-card{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:4px;
+  overflow:hidden;
+  transition:border-color 0.3s,transform 0.3s;
+}
+.batch-card:hover{border-color:rgba(0,200,240,0.3);transform:translateY(-4px)}
+.batch-card.featured{
+  border-color:rgba(0,200,240,0.4);
+  position:relative;
+}
+.featured-tag{
+  position:absolute;top:0;right:0;
+  background:var(--accent);color:#07090F;
+  font-size:0.65rem;font-weight:600;
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:0.08em;
+  padding:0.3rem 0.75rem;
+  text-transform:uppercase;
+}
+.batch-header{
+  padding:1.75rem 1.75rem 1.25rem;
+  border-bottom:1px solid var(--border);
+}
+.batch-name{
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;font-weight:700;
+  margin-bottom:0.3rem;
+}
+.batch-target{font-size:0.8rem;color:var(--muted);letter-spacing:0.03em}
+.batch-price{
+  padding:1.5rem 1.75rem;
+  border-bottom:1px solid var(--border);
+}
+.price-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:2rem;font-weight:600;
+  color:var(--accent);
+}
+.price-note{font-size:0.78rem;color:var(--muted);margin-top:0.2rem}
+.batch-details{padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:0.75rem}
+.batch-detail{display:flex;justify-content:space-between;font-size:0.85rem}
+.detail-label{color:var(--muted)}
+.detail-val{color:var(--text);font-weight:500}
+.batch-cta{padding:0 1.75rem 1.75rem}
+.batch-cta a{
+  display:block;text-align:center;
+  background:rgba(0,200,240,0.1);
+  border:1px solid rgba(0,200,240,0.3);
+  color:var(--accent);
+  padding:0.7rem;border-radius:4px;
+  text-decoration:none;font-size:0.9rem;
+  transition:all 0.2s;
+}
+.batch-cta a:hover{background:var(--accent);color:#07090F}
+.batch-card.featured .batch-cta a{background:var(--accent);color:#07090F}
+.batch-card.featured .batch-cta a:hover{opacity:0.85}
+
+/* CURRICULUM */
+.curriculum-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.curriculum-col h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:600;
+  margin-bottom:1.25rem;
+  padding-bottom:0.75rem;
+  border-bottom:1px solid var(--border);
+}
+.topic-list{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+.topic-list li{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.6rem 0.75rem;
+  border-radius:3px;
+  font-size:0.875rem;
+  transition:background 0.2s;
+}
+.topic-list li:hover{background:var(--surface)}
+.topic-name{color:var(--text)}
+.topic-weight{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem;
+  color:var(--accent);
+  background:rgba(0,200,240,0.1);
+  padding:0.15rem 0.4rem;
+  border-radius:2px;
+}
+
+/* CONTACT / ADMISSION */
+.contact-section{}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.contact-info h2{margin-bottom:1rem}
+.contact-info p{color:var(--muted);line-height:1.8;margin-bottom:2rem}
+.contact-details{display:flex;flex-direction:column;gap:1rem}
+.contact-item{display:flex;align-items:center;gap:0.75rem;font-size:0.9rem}
+.contact-item-icon{
+  width:36px;height:36px;flex-shrink:0;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.9rem;
+}
+.contact-item-text{color:var(--muted)}
+.contact-item-text strong{display:block;color:var(--text);font-size:0.8rem;font-weight:500;margin-bottom:1px}
+
+/* FORM */
+.admission-form{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:2rem;
+}
+.admission-form h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-weight:600;
+  margin-bottom:1.5rem;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{margin-bottom:1rem}
+.form-group label{
+  display:block;font-size:0.78rem;color:var(--muted);
+  letter-spacing:0.05em;margin-bottom:0.4rem;
+  text-transform:uppercase;
+}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:3px;
+  padding:0.65rem 0.85rem;
+  color:var(--text);font-size:0.9rem;
+  font-family:'DM Sans',sans-serif;
+  outline:none;
+  transition:border-color 0.2s;
+  appearance:none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{border-color:rgba(0,200,240,0.5)}
+.form-group select option{background:var(--surface)}
+.form-group textarea{resize:none;height:80px;line-height:1.6}
+.form-submit{
+  width:100%;background:var(--accent);
+  color:#07090F;border:none;cursor:pointer;
+  padding:0.85rem;border-radius:4px;
+  font-size:1rem;font-weight:500;
+  font-family:'DM Sans',sans-serif;
+  transition:all 0.2s;margin-top:0.5rem;
+}
+.form-submit:hover{background:#33D4F5;transform:translateY(-1px)}
+.form-note{font-size:0.75rem;color:var(--muted);text-align:center;margin-top:0.75rem}
+
+/* FOOTER */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);
+  padding:3rem 5%;
+  text-align:center;
+}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;font-weight:700;
+  color:var(--text);margin-bottom:0.75rem;
+}
+.footer-logo span{color:var(--accent)}
+.footer-tagline{font-size:0.85rem;color:var(--muted);margin-bottom:2rem}
+.footer-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.footer-links a{font-size:0.85rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-size:0.8rem;color:var(--muted);opacity:0.5}
+
+/* DIVIDER */
+.section-divider{height:1px;background:var(--border);max-width:1100px;margin:0 auto}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .about-grid,.contact-grid,.curriculum-grid{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .batches-grid{grid-template-columns:1fr}
+  nav ul{display:none}
+  nav ul.open{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);padding:1rem 5%;gap:1rem}
+  .hamburger{display:flex}
+  .score-badge{bottom:-10px;right:-10px}
+}
+@media(max-width:600px){
+  .features-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .hero-stats{gap:2rem}
+  h1{font-size:2.5rem}
+}
+
+/* SCROLL ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* SUCCESS MSG */
+.success-msg{
+  text-align:center;padding:2rem;
+  color:var(--accent);
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;
+  display:none;
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Physics<span>Bit</span></div>
+  <ul id="nav-menu">
+    <li><a href="#about">About</a></li>
+    <li><a href="#features">What you get</a></li>
+    <li><a href="#batches">Batches</a></li>
+    <li><a href="#curriculum">Syllabus</a></li>
+    <li><a href="#contact" class="nav-cta">Book Demo Class</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">JEE Physics · Hyderabad &amp; Pan-India</div>
+  <h1>Physics that<br>makes <em>JEE crack</em><br>inevitable.</h1>
+  <p class="hero-sub">Live online classes by a <strong>JEE Mains 99+ percentiler.</strong> Concepts taught the way toppers actually think — not the way textbooks explain it.</p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">Book Free Demo Class</a>
+    <a href="#batches" class="btn-secondary">View Batches &amp; Fees</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">99<span>%ile</span></div>
+      <div class="stat-label">JEE Mains 2019</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Live Batches</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">20</div>
+      <div class="stat-label">Max students/batch</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Classes per week</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="padding-top:80px">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img fade-up">
+        <div class="about-frame">
+          <div class="about-frame-inner">
+            <div class="avatar-circle">P</div>
+            <div class="frame-label">Your photo here</div>
+          </div>
+        </div>
+        <div class="score-badge">JEE Mains 2019<br>99+ Percentile</div>
+      </div>
+      <div class="about-content fade-up">
+        <span class="section-tag">// about the teacher</span>
+        <h2>Taught by someone<br>who actually cracked it.</h2>
+        <p>Most Physics teachers explain <em>what</em> the formula is. I teach you <em>why</em> it exists, <em>when</em> to use it, and <em>how</em> to see through JEE traps — the way I had to learn to score in the 99th percentile.</p>
+        <p>I'm a former software engineer who left a tech career to teach Physics the way I wish I'd been taught. <strong>Small batches. Real attention. Zero rote learning.</strong></p>
+        <ul class="credential-list">
+          <li>99+ percentile, JEE Mains 2019</li>
+          <li>Expert in JEE Advanced problem-solving methodology</li>
+          <li>Max 20 students per batch — you're not a number here</li>
+          <li>Live classes, not recorded lectures you ignore at 2x speed</li>
+          <li>Detailed chapter notes &amp; curated DPPs included</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-inner">
+    <span class="section-tag fade-up">// what you get</span>
+    <h2 class="fade-up">Everything you need.<br>Nothing you don't.</h2>
+    <p class="section-lead fade-up">No 200-student batches. No recycled PDFs from 2015. Just sharp teaching, tight batches, and a system that builds real problem-solvers.</p>
+    <div class="features-grid fade-up">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Live Classes Twice a Week</h3>
+        <p>90-minute live sessions via Zoom with interactive whiteboard. Ask doubts in real time. Classes are recorded for 7 days if you miss one.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📐</div>
+        <h3>PhysicsBit Chapter Notes</h3>
+        <p>Handcrafted notes for every chapter — not copy-pasted from HC Verma. Covers concepts, derivations, and the shortcuts that actually work in JEE.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Daily Practice Problems</h3>
+        <p>Curated DPPs after every class, tiered easy → JEE Advanced level. Builds the problem-solving muscle that separates 90%ile from 99%ile scorers.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Weekly Chapter Tests</h3>
+        <p>JEE Mains-pattern tests every week to track progress. Monthly full-syllabus mocks from Month 3. You see exactly where you stand and where to improve.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Structured Doubt Support</h3>
+        <p>Dedicated Sunday doubt sessions via Zoom. Batch WhatsApp group for peer discussion. Doubts answered within 24 hours — no question left unanswered.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>Monthly Progress Reports</h3>
+        <p>Detailed monthly report for students and parents covering attendance, test scores, topics mastered, and personalised feedback on improvement areas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BATCHES -->
+<section id="batches" class="batches-section">
+  <div class="section-inner">
+    <span class="section-tag fade-up">// batch structure</span>
+    <h2 class="fade-up">Three batches.<br>Pick yours.</h2>
+    <p class="section-lead fade-up">All batches run 6 days a week (one batch per day). Each student attends 2 classes per week — live, online, with full interaction.</p>
+    <div class="batches-grid fade-up">
+
+      <div class="batch-card">
+        <div class="batch-header">
+          <div class="batch-name">Batch A</div>
+          <div class="batch-target">Class 12 · JEE 2026</div>
+        </div>
+        <div class="batch-price">
+          <div class="price-num">₹15,000<span style="font-size:1rem;color:var(--muted)">/mo</span></div>
+          <div class="price-note">Introductory: ₹10,000 for first 10 seats</div>
+        </div>
+        <div class="batch-details">
+          <div class="batch-detail"><span class="detail-label">Days</span><span class="detail-val">Mon + Thu</span></div>
+          <div class="batch-detail"><span class="detail-label">Time</span><span class="detail-val">6:00 – 7:30 PM</span></div>
+          <div class="batch-detail"><span class="detail-label">Duration</span><span class="detail-val">90 min / class</span></div>
+          <div class="batch-detail"><span class="detail-label">Seats</span><span class="detail-val">Max 20</span></div>
+          <div class="batch-detail"><span class="detail-label">Focus</span><span class="detail-val">JEE Mains + Advanced</span></div>
+        </div>
+        <div class="batch-cta"><a href="#contact">Book Demo →</a></div>
+      </div>
+
+      <div class="batch-card featured">
+        <div class="featured-tag">Most Popular</div>
+        <div class="batch-header">
+          <div class="batch-name">Batch B</div>
+          <div class="batch-target">Class 12 · Droppers</div>
+        </div>
+        <div class="batch-price">
+          <div class="price-num">₹15,000<span style="font-size:1rem;color:var(--muted)">/mo</span></div>
+          <div class="price-note">Introductory: ₹10,000 for first 10 seats</div>
+        </div>
+        <div class="batch-details">
+          <div class="batch-detail"><span class="detail-label">Days</span><span class="detail-val">Tue + Fri</span></div>
+          <div class="batch-detail"><span class="detail-label">Time</span><span class="detail-val">7:00 – 8:30 PM</span></div>
+          <div class="batch-detail"><span class="detail-label">Duration</span><span class="detail-val">90 min / class</span></div>
+          <div class="batch-detail"><span class="detail-label">Seats</span><span class="detail-val">Max 20</span></div>
+          <div class="batch-detail"><span class="detail-label">Focus</span><span class="detail-val">Intensive Revision</span></div>
+        </div>
+        <div class="batch-cta"><a href="#contact">Book Demo →</a></div>
+      </div>
+
+      <div class="batch-card">
+        <div class="batch-header">
+          <div class="batch-name">Batch C</div>
+          <div class="batch-target">Class 11 · Foundation</div>
+        </div>
+        <div class="batch-price">
+          <div class="price-num">₹12,000<span style="font-size:1rem;color:var(--muted)">/mo</span></div>
+          <div class="price-note">Introductory: ₹10,000 for first 10 seats</div>
+        </div>
+        <div class="batch-details">
+          <div class="batch-detail"><span class="detail-label">Days</span><span class="detail-val">Wed + Sat</span></div>
+          <div class="batch-detail"><span class="detail-label">Time</span><span class="detail-val">5:00 – 6:30 PM</span></div>
+          <div class="batch-detail"><span class="detail-label">Duration</span><span class="detail-val">90 min / class</span></div>
+          <div class="batch-detail"><span class="detail-label">Seats</span><span class="detail-val">Max 20</span></div>
+          <div class="batch-detail"><span class="detail-label">Focus</span><span class="detail-val">Concept Building</span></div>
+        </div>
+        <div class="batch-cta"><a href="#contact">Book Demo →</a></div>
+      </div>
+
+    </div>
+    <p style="text-align:center;margin-top:2rem;font-size:0.85rem;color:var(--muted)">
+      5% off on quarterly payment · 10% off on 6-month payment · EMI available via credit card
+    </p>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section id="curriculum">
+  <div class="section-inner">
+    <span class="section-tag fade-up">// syllabus coverage</span>
+    <h2 class="fade-up">Every chapter.<br>Every concept.</h2>
+    <p class="section-lead fade-up">Full JEE Physics syllabus — Class 11 &amp; 12 — sequenced by concept dependency and JEE weightage. No chapter gets skipped.</p>
+    <div class="curriculum-grid fade-up">
+      <div class="curriculum-col">
+        <h3>Class 11 Topics</h3>
+        <ul class="topic-list">
+          <li><span class="topic-name">Mechanics — Kinematics &amp; Dynamics</span><span class="topic-weight">High</span></li>
+          <li><span class="topic-name">Laws of Motion &amp; Friction</span><span class="topic-weight">High</span></li>
+          <li><span class="topic-name">Work, Energy &amp; Power</span><span class="topic-weight">Med</span></li>
+          <li><span class="topic-name">Rotational Motion &amp; Torque</span><span class="topic-weight">High</span></li>
+          <li><span class="topic-name">Gravitation</span><span class="topic-weight">Med</span></li>
+          <li><span class="topic-name">Fluid Mechanics</span><span class="topic-weight">Med</span></li>
+          <li><span class="topic-name">Thermal Physics &amp; Thermodynamics</span><span class="topic-weight">Med</span></li>
+          <li><span class="topic-name">Waves &amp; Oscillations (SHM)</span><span class="topic-weight">High</span></li>
+        </ul>
+      </div>
+      <div class="curriculum-col">
+        <h3>Class 12 Topics</h3>
+        <ul class="topic-list">
+          <li><span class="topic-name">Electrostatics &amp; Capacitors</span><span class="topic-weight">High</span></li>
+          <li><span class="topic-name">Current Electricity &amp; Circuits</span><span class="topic-weight">High</span></li>
+          <li><span class="topic-name">Magnetism &amp; EMI</span><span class="topic-weight">High</span></li>
+          <li><span class="topic-name">Alternating Current</span><span class="topic-weight">Med</span></li>
+          <li><span class="topic-name">Ray &amp; Wave Optics</span><span class="topic-weight">High</span></li>
+          <li><span class="topic-name">Modern Physics &amp; Dual Nature</span><span class="topic-weight">High</span></li>
+          <li><span class="topic-name">Atoms, Nuclei &amp; Radioactivity</span><span class="topic-weight">Med</span></li>
+          <li><span class="topic-name">Semiconductors &amp; Devices</span><span class="topic-weight">Low</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section" style="background:var(--surface)">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-info fade-up">
+        <span class="section-tag">// get in touch</span>
+        <h2>Book your<br>free demo class.</h2>
+        <p>Fill the form and we'll reach out within 24 hours to schedule your free demo class. No commitment, no payment — just come and see if PhysicsBit is the right fit for you.</p>
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <div class="contact-item-text"><strong>Location</strong>Hyderabad, Telangana (Online – Pan India)</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📱</div>
+            <div class="contact-item-text"><strong>WhatsApp</strong>+91 XXXXX XXXXX</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">✉️</div>
+            <div class="contact-item-text"><strong>Email</strong>hello@physicsbit.com</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">⏰</div>
+            <div class="contact-item-text"><strong>Response time</strong>Within 24 hours</div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-up">
+        <div class="admission-form">
+          <h3>Admission Enquiry</h3>
+          <div id="form-content">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Student Name</label>
+                <input type="text" placeholder="Full name">
+              </div>
+              <div class="form-group">
+                <label>Class</label>
+                <select>
+                  <option value="">Select class</option>
+                  <option>Class 11</option>
+                  <option>Class 12</option>
+                  <option>Dropper (Class 12 passed)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Student Phone / WhatsApp</label>
+                <input type="tel" placeholder="+91 XXXXX XXXXX">
+              </div>
+              <div class="form-group">
+                <label>Parent Phone</label>
+                <input type="tel" placeholder="+91 XXXXX XXXXX">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Preferred Batch</label>
+              <select>
+                <option value="">Select a batch</option>
+                <option>Batch A — Mon + Thu 6 PM (Class 12)</option>
+                <option>Batch B — Tue + Fri 7 PM (Class 12 / Dropper)</option>
+                <option>Batch C — Wed + Sat 5 PM (Class 11)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Anything you'd like to tell us?</label>
+              <textarea placeholder="Previous Physics marks, specific areas of struggle, questions about the batch..."></textarea>
+            </div>
+            <button class="form-submit" onclick="submitForm()">Request Demo Class →</button>
+            <p class="form-note">We'll WhatsApp you within 24 hours to confirm your demo slot.</p>
+          </div>
+          <div class="success-msg" id="success-msg">
+            ✓ Request received!<br>
+            <span style="font-size:0.9rem;font-family:'DM Sans',sans-serif;color:var(--muted);font-style:normal">We'll WhatsApp you within 24 hours.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Physics<span>Bit</span></div>
+    <div class="footer-tagline">Think Physics. Crack JEE.</div>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#features">What you get</a>
+      <a href="#batches">Batches</a>
+      <a href="#curriculum">Syllabus</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-copy">© 2025 PhysicsBit, Hyderabad. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+/* CANVAS BACKGROUND — PARTICLE NETWORK */
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor() { this.reset() }
+  reset() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.3;
+    this.r = Math.random() * 1.5 + 0.5;
+    this.alpha = Math.random() * 0.5 + 0.1;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,200,240,${this.alpha})`;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+function drawLines() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const d = Math.sqrt(dx * dx + dy * dy);
+      if (d < 120) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(0,200,240,${0.06 * (1 - d / 120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => { p.update(); p.draw(); });
+  drawLines();
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* SCROLL FADE-IN */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+/* MOBILE NAV */
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('nav-menu').classList.toggle('open');
+});
+
+/* FORM SUBMIT */
+function submitForm() {
+  document.getElementById('form-content').style.display = 'none';
+  document.getElementById('success-msg').style.display = 'block';
+}
+
+/* SMOOTH ACTIVE NAV */
+document.querySelectorAll('nav a[href^="#"]').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('nav-menu').classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
