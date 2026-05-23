@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physicsbit Physics Mentoring</title>
-    <!-- Google Fonts for the Anthropic/Claude Aesthetic -->
+    <title>PhysicsBit — JEE Physics by a 99%ile Scorer</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- Design Tokens & Reset --- */
+        /* --- Premium Editorial Light-Mode Tokens --- */
         :root {
-            --bg-color: #FBF9F6;
-            --text-main: #191919;
-            --text-muted: #565656;
-            --accent: #C25E43;
-            --accent-hover: #A64F37;
-            --border: #E8E4DC;
-            --font-serif: 'Newsreader', Georgia, serif;
-            --font-sans: 'Inter', system-ui, sans-serif;
+            --bg: #FBF9F6;              /* Warm Alabaster Cream */
+            --surface: #F4F0E8;         /* Soft Book-Paper Tint */
+            --surface2: #EAE3D5;        /* Deep Editorial Cream */
+            --accent: #B84A39;           /* Academic Terracotta Rust */
+            --accent2: #2B4C7E;          /* Deep Scholar Blue */
+            --text: #191919;            /* High-Contrast Literary Charcoal */
+            --muted: #5A5752;           /* Soft Muted Umber */
+            --border: rgba(25, 25, 25, 0.08);
+            --glow: rgba(184, 74, 57, 0.06);
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'DM Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
 
         * {
@@ -28,156 +32,204 @@
             box-sizing: border-box;
         }
 
+        /* Continuous Smooth Native Scroll Configuration */
         html {
             scroll-behavior: smooth;
-            /* Section snapping mechanism */
-            scroll-snap-type: y mandatory;
+            background-color: var(--bg);
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            color: var(--text);
+            background-color: var(--bg);
             font-family: var(--font-sans);
+            font-weight: 400;
+            line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- Global Scroll-Snap Section Container --- */
+        /* --- Global Structural Section Setup --- */
         section {
-            height: 100vh;
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
             width: 100vw;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 0 10%;
+            padding: 120px 10% 80px 10%;
             border-bottom: 1px solid var(--border);
-            position: relative;
-            background-color: var(--bg-color);
+            overflow: hidden;
         }
 
-        /* --- Scroll-driven Animation Classes --- */
-        .reveal {
+        .section-inner {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Scroll Animation Properties --- */
+        .fade-up, .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 1.2s cubic-bezier(0.215, 0.610, 0.355, 1), 
-                        transform 1.2s cubic-bezier(0.215, 0.610, 0.355, 1);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .reveal.active {
+        .fade-up.visible, .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* --- Typography & Buttons --- */
-        h1, h2, h3 {
+        /* --- Typography --- */
+        h1, h2, h3, h4 {
             font-family: var(--font-serif);
-            font-weight: 400;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        em {
+            font-style: italic;
+            color: var(--accent);
         }
 
         p {
-            color: var(--text-muted);
-            line-height: 1.6;
-            font-size: 1.1rem;
+            color: var(--muted);
         }
 
+        .section-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* --- Button Architecture --- */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.8rem 1.8rem;
-            font-family: var(--font-sans);
-            font-size: 0.95rem;
-            text-decoration: none;
+            padding: 0.85rem 2rem;
             border-radius: 4px;
-            transition: all 0.2s ease;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: 0.01em;
             cursor: pointer;
+            gap: 0.6rem;
         }
 
         .btn-primary {
-            background-color: var(--accent);
-            color: #ffffff;
+            background: var(--accent);
+            color: #FFFFFF;
             border: 1px solid var(--accent);
         }
 
         .btn-primary:hover {
-            background-color: var(--accent-hover);
+            background: #9E3A2B;
+            border-color: #9E3A2B;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(184, 74, 57, 0.15);
         }
 
         .btn-secondary {
-            background-color: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--text-main);
-            margin-left: 1rem;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--text);
         }
 
         .btn-secondary:hover {
-            background-color: rgba(25, 25, 25, 0.05);
+            background: rgba(25, 25, 25, 0.04);
+            transform: translateY(-2px);
         }
 
-        /* --- Top Navigation Bar --- */
+        /* --- Ambient Vector Canvas --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* --- Header Top Bar --- */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 80px;
+            height: 72px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 10%;
-            background-color: rgba(251, 249, 246, 0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(251, 249, 246, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(232, 228, 220, 0.5);
+            border-bottom: 1px solid var(--border);
         }
 
         .logo {
             font-family: var(--font-serif);
             font-size: 1.6rem;
-            font-style: italic;
-            color: var(--text-main);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text);
             text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
         }
 
         .nav-buttons {
             display: flex;
             align-items: center;
+            gap: 1rem;
         }
 
-        /* Mobile Burger Menu Icon */
+        .nav-buttons .btn {
+            padding: 0.5rem 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        /* Mobile Controls */
         .burger {
             display: none;
             flex-direction: column;
             justify-content: space-between;
-            width: 24px;
-            height: 18px;
+            width: 22px;
+            height: 16px;
             cursor: pointer;
             z-index: 1001;
         }
 
         .burger span {
             width: 100%;
-            height: 2px;
-            background-color: var(--text-main);
+            height: 1.5px;
+            background-color: var(--text);
             transition: all 0.3s ease;
         }
 
-        /* Mobile Overlay Dropdown */
         .mobile-menu {
             position: fixed;
             top: -100%;
             left: 0;
             width: 100%;
-            background-color: var(--bg-color);
-            padding: 100px 10% 40px 10%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: all 0.4s ease;
+            background-color: var(--surface);
+            padding: 110px 10% 40px 10%;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 999;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.25rem;
             border-bottom: 1px solid var(--border);
         }
 
@@ -185,28 +237,65 @@
             top: 0;
         }
 
-        /* --- Section 1: Hero --- */
-        #hero .container {
-            max-width: 800px;
-            text-align: left;
+        /* --- Section 1: Hero Layout --- */
+        #hero .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(184, 74, 57, 0.06);
+            border: 1px solid rgba(184, 74, 57, 0.2);
+            border-radius: 4px;
+            padding: 0.4rem 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            margin-bottom: 1.75rem;
+        }
+
+        #hero .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.2); }
         }
 
         #hero h1 {
-            font-size: 3.5rem;
-            line-height: 1.15;
+            font-size: clamp(2.5rem, 5vw, 4.2rem);
+            line-height: 1.1;
             margin-bottom: 2rem;
-            letter-spacing: -0.02em;
+            max-width: 900px;
+            color: var(--text);
         }
 
-        #hero .narrative {
-            margin-bottom: 2rem;
+        #hero .narrative-block {
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
+            margin-bottom: 2.25rem;
+            max-width: 720px;
         }
 
-        #hero .narrative p {
-            font-size: 1.2rem;
+        #hero .narrative-block p {
+            font-size: 1.125rem;
+            line-height: 1.7;
+        }
+
+        .inline-h2 {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: 1.65rem;
+            color: var(--accent);
+            letter-spacing: -0.01em;
+            display: inline;
+            margin: 0 0.2rem;
         }
 
         #hero .bullets {
@@ -220,7 +309,7 @@
             display: flex;
             align-items: center;
             font-size: 1rem;
-            color: var(--text-main);
+            color: var(--text);
             font-weight: 500;
         }
 
@@ -231,295 +320,675 @@
             font-size: 1.2rem;
         }
 
-        /* --- Section 2: Why Choose Us --- */
-        #why-choose-us {
-            height: auto;
-            min-height: 100vh;
-            padding: 120px 10%;
-            flex-direction: column;
-            justify-content: center;
+        #hero .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3.5rem;
         }
 
-        .why-container {
-            max-width: 1000px;
+        #hero .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 100px; /* Generous editorial spacing */
         }
 
-        .why-item {
-            display: flex;
-            align-items: center;
-            gap: 80px;
+        #hero .stat-num {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 0.4rem;
         }
 
-        .why-item:nth-child(even) {
-            flex-direction: row-reverse;
+        #hero .stat-label {
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            color: var(--muted);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            line-height: 1.4;
         }
 
-        .why-image-wrapper {
-            flex: 1;
-            aspect-ratio: 4/3;
-            background-color: var(--border);
-            border-radius: 4px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .why-content {
-            flex: 1;
-        }
-
-        .why-content h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        /* --- Section 3: What We Offer --- */
-        #offers {
+        /* --- Section 2: The Method --- */
+        #method {
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
 
-        .offers-container {
-            max-width: 1100px;
+        .method-container {
             width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .method-header {
             text-align: center;
-        }
-
-        .offers-main-image {
-            width: 100%;
-            height: 300px;
-            background-color: var(--border);
-            border-radius: 4px;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .offers-intro-text {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto 4rem auto;
         }
 
-        .offers-grid {
+        .method-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.15;
+            color: var(--text);
+        }
+
+        .method-header p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        .method-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            text-align: left;
+            gap: 2rem;
         }
 
-        .offer-card h4 {
+        .method-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 3rem 2.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .method-card:hover {
+            background: var(--bg);
+            border-color: rgba(184, 74, 57, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(25,25,25,0.03);
+        }
+
+        .stage-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+            display: block;
+        }
+
+        .method-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .stage-quote {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+            display: block;
+        }
+
+        .method-card p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* --- Section 3: What PhysicsBit Includes --- */
+        #includes {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .includes-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .includes-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .includes-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.15;
+            color: var(--text);
+        }
+
+        .includes-header p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        .includes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .include-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .include-card:hover {
+            background: var(--bg);
+            border-color: rgba(184, 74, 57, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(25,25,25,0.03);
+        }
+
+        .include-icon {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: flex;
+        }
+
+        .include-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .include-card h3 {
             font-family: var(--font-serif);
             font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
         }
 
-        /* --- Section 4: Contact Us --- */
+        .include-card p {
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: var(--muted);
+        }
+
+        /* --- Section 4: Contact Us Section --- */
         #contact {
-            text-align: center;
+            justify-content: center;
         }
 
-        .contact-container {
-            max-width: 600px;
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 5rem;
+            align-items: start;
+            width: 100%;
         }
 
-        #contact p {
+        .contact-marketing h2 {
+            font-size: 2.8rem;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .contact-trigger-text {
             font-family: var(--font-serif);
-            font-size: 2rem;
-            color: var(--text-main);
+            font-size: 1.5rem;
+            color: var(--text);
             margin-bottom: 2.5rem;
             line-height: 1.4;
         }
 
-        /* --- Responsive Adaptation --- */
-        @media (max-width: 968px) {
-            header { padding: 0 5%; }
-            section { padding: 0 5%; }
+        .contact-trigger-text span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .admission-form {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(25,25,25,0.02);
+        }
+
+        .admission-form h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 0.75rem 1rem;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-family: var(--font-sans);
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: rgba(184, 74, 57, 0.4);
+        }
+
+        .form-group select option {
+            background: var(--bg);
+        }
+
+        .form-group textarea {
+            resize: none;
+            height: 75px;
+        }
+
+        .form-submit {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .form-note {
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .success-msg {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--accent);
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            display: none;
+        }
+
+        /* --- Responsive Structural Adaptations --- */
+        @media (max-width: 1024px) {
+            header, section { padding-left: 5%; padding-right: 5%; }
+            .method-grid { gap: 1rem; }
+            .contact-layout { gap: 3rem; }
+        }
+
+        @media (max-width: 900px) {
+            section { padding: 100px 5% 60px 5%; }
             
             .nav-buttons { display: none; }
             .burger { display: flex; }
 
-            /* Burger Animation to 'X' */
-            .burger.toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
+            .burger.toggle .line1 { transform: rotate(-45deg) translate(-4px, 5px); }
             .burger.toggle .line2 { opacity: 0; }
-            .burger.toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
+            .burger.toggle .line3 { transform: rotate(45deg) translate(-4px, -5px); }
 
-            #hero h1 { font-size: 2.5rem; }
-            #hero .bullets { gap: 1rem; }
+            /* Collapse Grids on Mobile */
+            #hero .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+            .method-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .includes-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .contact-layout { grid-template-columns: 1fr; gap: 4rem; }
+        }
 
-            #why-choose-us { padding: 100px 5%; }
-            .why-item, .why-item:nth-child(even) {
-                flex-direction: column;
-                gap: 30px;
-            }
-            .why-container { gap: 60px; }
-
-            #offers { height: auto; padding: 100px 5%; }
-            .offers-grid { grid-template-columns: 1fr; gap: 30px; }
-            
-            #contact p { font-size: 1.5rem; }
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            #hero h1 { font-size: 2.3rem; }
+            #hero .hero-stats { grid-template-columns: 1fr; gap: 1.25rem; }
+            .method-header h2, .includes-header h2 { font-size: 2.2rem; }
+            .contact-marketing h2 { font-size: 2.2rem; }
+            .admission-form { padding: 1.75rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
+    <canvas id="bg-canvas"></canvas>
+
     <header>
-        <a href="#" class="logo">Physicsbit.</a>
+        <a href="#" class="logo">Physics<span>Bit</span></a>
         <div class="nav-buttons">
             <a href="#contact" class="btn btn-secondary">Contact Us</a>
-            <a href="#contact" class="btn btn-primary" style="margin-left:10px;">Book Demo</a>
+            <a href="#contact" class="btn btn-primary">Book Demo</a>
         </div>
-        <div class="burger" id="burger-menu">
+        <div class="burger" id="burger-cta">
             <span class="line1"></span>
             <span class="line2"></span>
             <span class="line3"></span>
         </div>
     </header>
 
-    <!-- Mobile Dropdown Navigation -->
-    <div class="mobile-menu" id="mobile-dropdown">
-        <a href="#contact" class="btn btn-primary mobile-nav-link">Book Free Demo Class</a>
-        <a href="#contact" class="btn btn-secondary mobile-nav-link" style="margin-left:0;">Contact Us</a>
+    <div class="mobile-menu" id="mobile-menu-overlay">
+        <a href="#contact" class="btn btn-primary m-nav-close">Book Free Demo Class</a>
+        <a href="#contact" class="btn btn-secondary m-nav-close" style="margin-top: 0.5rem;">Contact Us</a>
     </div>
 
-    <!-- Section 1: Hero -->
     <section id="hero">
-        <div class="container reveal">
-            <h1>Physics doesn’t have to feel like an insurmountable wall.</h1>
+        <div class="section-inner fade-up">
+            <h1>JEE Physics taught the way it should be.</h1>
             
-            <div class="narrative">
-                <p>We help students move past blind memorization and rebuild foundational physical intuition.
-                Through deliberate, structured problem-solving, confusion naturally shifts into clarity.
-                Watch your child regain native confidence and see the results reflect in their weekly evaluations.</p>
+            <div class="narrative-block">
+                <p>Structured Online Coaching for JEE Physics led directly by a <span class="inline-h2">99+ percentiler</span>.</p>
+                <p>At Physicsbit, we focus on developing the student's ability to think and approach a problem - which most coaching centres fail to do. Experience it by booking a free demo class or contact us to learn more.</p>
             </div>
 
             <div class="bullets">
-                <div class="bullet-item">Live interactive classes</div>
-                <div class="bullet-item">Structured predictive tests</div>
-                <div class="bullet-item">Personal 1-on-1 mentoring</div>
+                <div class="bullet-item">Live classes thrice a week</div>
+                <div class="bullet-item">Weekly curated chapter tests</div>
+                <div class="bullet-item">One-on-one mentoring sessions</div>
             </div>
 
             <div class="cta-group">
                 <a href="#contact" class="btn btn-primary">Book Free Demo Class</a>
                 <a href="#contact" class="btn btn-secondary">Contact Us</a>
             </div>
-        </div>
-    </section>
 
-    <!-- Section 2: Why Choose Us -->
-    <section id="why-choose-us">
-        <div class="why-container">
-            
-            <!-- Item 1 -->
-            <div class="why-item reveal">
-                <div class="why-image-wrapper">[ Editorial Concept Imagery ]</div>
-                <div class="why-content">
-                    <h3>Concept-First Frameworks</h3>
-                    <p>We don't force formulas. We unpack the physical phenomena behind the math. When a student maps a concept visually, solving complex, multi-tiered mechanics problems becomes second nature rather than a guessing game.</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-num">3</div>
+                    <div class="stat-label">Classes Per Week</div>
                 </div>
-            </div>
-
-            <!-- Item 2 -->
-            <div class="why-item reveal">
-                <div class="why-image-wrapper">[ Adaptive Progress Analytics ]</div>
-                <div class="why-content">
-                    <h3>Targeted Micro-Evaluations</h3>
-                    <p>Our periodic check-ins are explicitly engineered to pinpoint structural gaps in a student's logic before they turn into exam-day anxieties. We track cognitive friction points so weekly improvement becomes visible and measurable.</p>
+                <div class="stat-item">
+                    <div class="stat-num">20</div>
+                    <div class="stat-label">Students Per Batch</div>
                 </div>
-            </div>
-
-            <!-- Item 3 -->
-            <div class="why-item reveal">
-                <div class="why-image-wrapper">[ Dedicated Mentorship Space ]</div>
-                <div class="why-content">
-                    <h3>Empathic Mindset Mentoring</h3>
-                    <p>Struggling with physics is rarely just an intellectual hurdle; it’s an emotional block. Our personal mentors don't just teach curriculum—they actively rebuild a student's academic self-esteem and ease stress patterns.</p>
+                <div class="stat-item">
+                    <div class="stat-num">Jun 24</div>
+                    <div class="stat-label">Last Date to Enrol</div>
                 </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Section 3: What We Offer -->
-    <section id="offers">
-        <div class="offers-container reveal">
-            <div class="offers-main-image">[ Studio Environment Image ]</div>
-            
-            <div class="offers-intro-text">
-                <p>An elite, immersive environment specifically structured for secondary and pre-university students navigating complex physics tracks.</p>
-            </div>
-
-            <div class="offers-grid">
-                <div class="offer-card">
-                    <h4>The Core Academy</h4>
-                    <p>Complete conceptual deep dives over real-time interactive lectures, backed by high-yield visual problem mapping archives.</p>
-                </div>
-                <div class="offer-card">
-                    <h4>The Evaluation Suite</h4>
-                    <p>Custom-crafted diagnostic testing simulating precise exam pressure, accompanied by granular step-by-step video solutions.</p>
-                </div>
-                <div class="offer-card">
-                    <h4>The Mentor Lab</h4>
-                    <p>Direct, unstructured 1-on-1 calendar access to professional guides to break down specific assignment bottlenecks.</p>
+                <div class="stat-item">
+                    <div class="stat-num">Jul 1</div>
+                    <div class="stat-label">Classes Starting Date</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section 4: Contact Us -->
+    <section id="method">
+        <div class="section-inner method-container fade-up">
+            <div class="method-header">
+                <h2>The PhysicsBit method:<br><em>Diagnose · Unlock · Execute</em></h2>
+                <p>Every class, every problem, every explanation at PhysicsBit is built around a single three-stage method. It's not a shortcut — it's the thinking process that every good physicist uses, made explicit and teachable.</p>
+            </div>
+
+            <div class="method-grid">
+                <div class="method-card">
+                    <span class="stage-label">Stage 01</span>
+                    <h3>Diagnose</h3>
+                    <span class="stage-quote">"What is this problem actually testing?"</span>
+                    <p>Before touching a formula — read the problem as a physicist. Identify the concept or combination of concepts being tested.</p>
+                </div>
+                <div class="method-card">
+                    <span class="stage-label">Stage 02</span>
+                    <h3>Unlock</h3>
+                    <span class="stage-quote">"How exactly do these concepts connect here?"</span>
+                    <p>Find the precise relationship between the concepts in this specific problem. This is the click — and it's what no other coaching teaches.</p>
+                </div>
+                <div class="method-card">
+                    <span class="stage-label">Stage 03</span>
+                    <h3>Execute</h3>
+                    <span class="stage-quote">"How do I translate the physics into maths?"</span>
+                    <p>Only now do equations appear. When Stages 1 and 2 are done well, the maths follows naturally — you don't recall the formula, you derive it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="includes">
+        <div class="section-inner includes-container fade-up">
+            <div class="includes-header">
+                <h2>What PhysicsBit includes</h2>
+                <p>Every student gets access to a complete learning experience — not just classes.</p>
+            </div>
+
+            <div class="includes-grid">
+                <div class="include-card">
+                    <div class="include-icon">
+                        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3>Live classes, 3× a week</h3>
+                    <p>Small batches. Every class teaches the method on real problems — not just theory, not just solutions.</p>
+                </div>
+                <div class="include-card">
+                    <div class="include-icon">
+                        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3>Curated practice tests</h3>
+                    <p>Every problem is chosen for a reason — to teach a concept connection, not pad a question bank.</p>
+                </div>
+                <div class="include-card">
+                    <div class="include-icon">
+                        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3>Small batches</h3>
+                    <p>Limited seats per batch so every student gets attention — not lost in a class of 200.</p>
+                </div>
+                <div class="include-card">
+                    <div class="include-icon">
+                        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                    <h3>One-on-one mentoring</h3>
+                    <p>Regular personal sessions to address individual weak areas, doubts, and exam strategy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contact">
-        <div class="contact-container reveal">
-            <p>Call or text "Hi" on WhatsApp to unlock comprehensive program deep dives and schedule your diagnostic consult.</p>
-            <a href="https://wa.me/1234567890" target="_blank" class="btn btn-primary">Connect via WhatsApp</a>
+        <div class="section-inner contact-layout fade-up">
+            <div class="contact-marketing">
+                <h2>Book your free demo class.</h2>
+                
+                <p class="contact-trigger-text">
+                    Call or Text <span>'Hi'</span> on WhatsApp for more details or to book slots instantly.
+                </p>
+                
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem;">
+                    <a href="https://wa.me/917981344075" target="_blank" class="btn btn-primary" style="width: 300px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" style="flex-shrink: 0;">
+                            <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.618-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                        </svg>
+                        Connect via WhatsApp
+                    </a>
+                    
+                    <a href="tel:+91XXXXXXXXXX" class="btn btn-secondary" style="width: 300px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" style="flex-shrink: 0;">
+                            <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.518.518 0 0 0 .136.492l2.718 2.718a.518.518 0 0 0 .492.136l2.19-.547a1.598 1.598 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                        </svg>
+                        Call +91 79813 44075
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <div class="admission-form">
+                    <h3>Admission Enquiry Form</h3>
+                    <div id="form-interactive-shell">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Student Name</label>
+                                <input type="text" placeholder="Full name">
+                            </div>
+                            <div class="form-group">
+                                <label>Target Class Track</label>
+                                <select>
+                                    <option value="">Select current track</option>
+                                    <option>Class 11 (Foundation)</option>
+                                    <option>Class 12 (Mains + Advanced)</option>
+                                    <option>Dropper Track (Intensive)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Student Phone Number (Optional)</label>
+                                <input type="tel" placeholder="+91 XXXXX XXXXX">
+                            </div>
+                            <div class="form-group">
+                                <label>Parent Contact Number</label>
+                                <input type="tel" placeholder="+91 XXXXX XXXXX">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Context Details / Struggles</label>
+                            <textarea placeholder="Tell us about specific target areas or previous physics performance metrics..."></textarea>
+                        </div>
+                        <button class="btn btn-primary form-submit" onclick="executeUIFormConversion()">Request Demo Class</button>
+                        <p class="form-note">Confirmation coordinates will route over WhatsApp within 24 operational hours.</p>
+                    </div>
+                    <div class="success-msg" id="form-success-alert">
+                        ✓ Transmission Secured!<br>
+                        <span style="font-size:0.95rem; font-family:var(--font-sans); color:var(--muted); display:block; margin-top:0.5rem; font-style:normal;">We will contact you on Whatsapp shortly.</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- --- JavaScript Interactions --- -->
     <script>
-        // 1. Mobile Hamburger Dropdown System
-        const burger = document.getElementById('burger-menu');
-        const dropdown = document.getElementById('mobile-dropdown');
-        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+        // 1. Mobile Drawer Execution
+        const burgerCta = document.getElementById('burger-cta');
+        const overlayDrawer = document.getElementById('mobile-menu-overlay');
+        const clickCloserLinks = document.querySelectorAll('.m-nav-close');
 
-        function toggleMenu() {
-            burger.classList.toggle('toggle');
-            dropdown.classList.toggle('open');
+        function toggleMenuSystem() {
+            burgerCta.classList.toggle('toggle');
+            overlayDrawer.classList.toggle('open');
         }
 
-        burger.addEventListener('click', toggleMenu);
-        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+        burgerCta.addEventListener('click', toggleMenuSystem);
+        clickCloserLinks.forEach(link => link.addEventListener('click', toggleMenuSystem));
 
-
-        // 2. Premium Fade-in Animation Engine (Intersection Observer)
-        const elementsToReveal = document.querySelectorAll('.reveal');
+        // 2. Scroll Animation Engine via Intersection Observer API
+        const animatedTargets = document.querySelectorAll('.fade-up, .reveal');
         
-        const observerOptions = {
-            root: null, // system viewport
-            threshold: 0.15, // triggers when 15% of object is visible
+        const trackingConfiguration = {
+            root: null,
+            threshold: 0.12, 
             rootMargin: "0px"
         };
 
-        const appearanceObserver = new IntersectionObserver((entries, observer) => {
+        const animationObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    // Stop observing once animated to protect performance
-                    observer.unobserve(entry.target);
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
             });
-        }, observerOptions);
+        }, trackingConfiguration);
 
-        elementsToReveal.forEach(el => appearanceObserver.observe(el));
+        animatedTargets.forEach(target => animationObserver.observe(target));
+
+        // 3. Embedded Light-Mode Geometric Network Canvas Engine
+        const spaceCanvas = document.getElementById('bg-canvas');
+        const drawContext = spaceCanvas.getContext('2d');
+        let viewW, viewH, clusterParticles = [];
+
+        function dynamicCanvasResize() {
+            viewW = spaceCanvas.width = window.innerWidth;
+            viewH = spaceCanvas.height = window.innerHeight;
+        }
+        dynamicCanvasResize();
+        window.addEventListener('resize', dynamicCanvasResize);
+
+        class VectorNode {
+            constructor() { this.reinitialize() }
+            reinitialize() {
+                this.x = Math.random() * viewW;
+                this.y = Math.random() * viewH;
+                this.vX = (Math.random() - 0.5) * 0.2;
+                this.vY = (Math.random() - 0.5) * 0.2;
+                this.radius = Math.random() * 1.5 + 0.5;
+                this.luminance = Math.random() * 0.4 + 0.1;
+            }
+            advance() {
+                this.x += this.vX;
+                this.y += this.vY;
+                if (this.x < 0 || this.x > viewW || this.y < 0 || this.y > viewH) {
+                    this.reinitialize();
+                }
+            }
+            render() {
+                drawContext.beginPath();
+                drawContext.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                drawContext.fillStyle = `rgba(90, 87, 82, ${this.luminance})`;
+                drawContext.fill();
+            }
+        }
+
+        for (let idx = 0; idx < 60; idx++) {
+            clusterParticles.push(new VectorNode());
+        }
+
+        function projectProximityLinks() {
+            for (let i = 0; i < clusterParticles.length; i++) {
+                for (let j = i + 1; j < clusterParticles.length; j++) {
+                    const deltaX = clusterParticles[i].x - clusterParticles[j].x;
+                    const deltaY = clusterParticles[i].y - clusterParticles[j].y;
+                    const distanceScalar = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                    
+                    if (distanceScalar < 140) {
+                        drawContext.beginPath();
+                        drawContext.moveTo(clusterParticles[i].x, clusterParticles[i].y);
+                        drawContext.lineTo(clusterParticles[j].x, clusterParticles[j].y);
+                        drawContext.strokeStyle = `rgba(184, 74, 57, ${0.06 * (1 - distanceScalar / 140)})`;
+                        drawContext.lineWidth = 0.5;
+                        drawContext.stroke();
+                    }
+                }
+            }
+        }
+
+        function executionLoop() {
+            drawContext.clearRect(0, 0, viewW, viewH);
+            clusterParticles.forEach(node => { node.advance(); node.render(); });
+            projectProximityLinks();
+            requestAnimationFrame(executionLoop);
+        }
+        executionLoop();
+
+        // 4. Form Transition Functional Logic
+        function executeUIFormConversion() {
+            document.getElementById('form-interactive-shell').style.display = 'none';
+            document.getElementById('form-success-alert').style.display = 'block';
+        }
     </script>
 </body>
 </html>
