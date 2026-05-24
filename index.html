@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PhysicsBit — JEE Physics by a 99%ile Scorer</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XEGNMNRDGQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XEGNMNRDGQ');
+    </script>
+	<meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +31,6 @@
             --text: #191919;            /* High-Contrast Literary Charcoal */
             --muted: #5A5752;           /* Soft Muted Umber */
             --border: rgba(25, 25, 25, 0.08);
-            --glow: rgba(184, 74, 57, 0.06);
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'DM Sans', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
@@ -32,7 +42,6 @@
             box-sizing: border-box;
         }
 
-        /* Continuous Smooth Native Scroll Configuration */
         html {
             scroll-behavior: smooth;
             background-color: var(--bg);
@@ -146,18 +155,6 @@
             transform: translateY(-2px);
         }
 
-        /* --- Ambient Vector Canvas --- */
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
         /* --- Header Top Bar --- */
         header {
             position: fixed;
@@ -169,7 +166,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 10%;
-            background: rgba(251, 249, 246, 0.8);
+            background: rgba(251, 249, 246, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 1000;
@@ -519,7 +516,86 @@
             color: var(--muted);
         }
 
-        /* --- Section 4: Contact Us Section --- */
+        /* --- Section 4: FAQ Section --- */
+        #faq {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--surface);
+        }
+
+        .faq-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .faq-header h2 {
+            font-size: 2.8rem;
+            line-height: 1.15;
+            color: var(--text);
+        }
+
+        .faq-list {
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 1.5rem 0;
+            font-family: var(--font-sans);
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--accent);
+        }
+
+        .faq-icon {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+            font-weight: 400;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .faq-answer p {
+            padding-bottom: 1.5rem;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* --- Section 5: Contact Us Section --- */
         #contact {
             justify-content: center;
         }
@@ -586,7 +662,6 @@
             text-transform: uppercase;
         }
 
-        /* Standard Input Styling */
         .form-group input,
         .form-group select,
         .form-group textarea {
@@ -617,7 +692,6 @@
             height: 75px;
         }
 
-        /* Specific Wrapper for +91 Phone Fields */
         .phone-wrapper {
             display: flex;
             align-items: center;
@@ -647,7 +721,6 @@
             width: 100%;
         }
 
-        /* Form Error Display */
         .error-message {
             color: var(--accent);
             font-size: 0.85rem;
@@ -679,6 +752,34 @@
             display: none;
         }
 
+        /* --- Floating Sticky WhatsApp Button --- */
+        .floating-wa-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            z-index: 9999;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .floating-wa-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+
+        .floating-wa-btn svg {
+            width: 32px;
+            height: 32px;
+        }
+
         /* --- Responsive Structural Adaptations --- */
         @media (max-width: 1024px) {
             header, section { padding-left: 5%; padding-right: 5%; }
@@ -696,29 +797,39 @@
             .burger.toggle .line2 { opacity: 0; }
             .burger.toggle .line3 { transform: rotate(45deg) translate(-4px, -5px); }
 
-            /* Collapse Grids on Mobile */
             #hero .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
             .method-grid { grid-template-columns: 1fr; gap: 2rem; }
             .includes-grid { grid-template-columns: 1fr; gap: 1.5rem; }
             .contact-layout { grid-template-columns: 1fr; gap: 4rem; }
+
+            .floating-wa-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 55px;
+                height: 55px;
+            }
+            .floating-wa-btn svg { width: 28px; height: 28px; }
         }
 
         @media (max-width: 600px) {
             .form-row { grid-template-columns: 1fr; gap: 0; }
             #hero h1 { font-size: 2.3rem; }
             #hero .hero-stats { grid-template-columns: 1fr; gap: 1.25rem; }
-            .method-header h2, .includes-header h2 { font-size: 2.2rem; }
+            .method-header h2, .includes-header h2, .faq-header h2 { font-size: 2.2rem; }
             .contact-marketing h2 { font-size: 2.2rem; }
             .admission-form { padding: 1.75rem; }
             
-            /* Allow buttons to naturally stack full width on small phones */
             .contact-marketing .btn { width: 100% !important; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
+    <a href="https://wa.me/917981344075" target="_blank" class="floating-wa-btn" aria-label="Chat with us on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.618-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+        </svg>
+    </a>
 
     <header>
         <a href="#" class="logo">Physics<span>Bit</span></a>
@@ -857,6 +968,56 @@
         </div>
     </section>
 
+    <section id="faq">
+        <div class="section-inner faq-container fade-up">
+            <div class="faq-header">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Is this a recorded course or live?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>All classes are 100% live and fully interactive. We believe real-time doubt clearing and direct interaction are the only ways to build a true understanding of physics concepts. No pre-recorded lectures are used for core teaching.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What happens if my child misses a class?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We understand that schedules can be unpredictable. Every single live class is securely recorded and can be accessed by the student within hours, so they can comfortably review the exact lesson they missed at any time.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Are study materials and question banks included?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes. We provide bespoke, handcrafted study material and curated test sheets. We do not recycle old PDFs. Every problem is specifically curated to teach and test the connections required for JEE Advanced.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What is your refund or cancellation policy?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We operate on complete transparency. You can request to cancel your enrollment within the first two weeks of your first paid class for a hassle-free, pro-rated refund. We want students here who genuinely connect with our method.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contact">
         <div class="section-inner contact-layout fade-up">
             <div class="contact-marketing">
@@ -980,73 +1141,27 @@
 
         animatedTargets.forEach(target => animationObserver.observe(target));
 
-        // 3. Embedded Light-Mode Geometric Network Canvas Engine
-        const spaceCanvas = document.getElementById('bg-canvas');
-        const drawContext = spaceCanvas.getContext('2d');
-        let viewW, viewH, clusterParticles = [];
-
-        function dynamicCanvasResize() {
-            viewW = spaceCanvas.width = window.innerWidth;
-            viewH = spaceCanvas.height = window.innerHeight;
-        }
-        dynamicCanvasResize();
-        window.addEventListener('resize', dynamicCanvasResize);
-
-        class VectorNode {
-            constructor() { this.reinitialize() }
-            reinitialize() {
-                this.x = Math.random() * viewW;
-                this.y = Math.random() * viewH;
-                this.vX = (Math.random() - 0.5) * 0.2;
-                this.vY = (Math.random() - 0.5) * 0.2;
-                this.radius = Math.random() * 1.5 + 0.5;
-                this.luminance = Math.random() * 0.4 + 0.1;
-            }
-            advance() {
-                this.x += this.vX;
-                this.y += this.vY;
-                if (this.x < 0 || this.x > viewW || this.y < 0 || this.y > viewH) {
-                    this.reinitialize();
+        // 3. FAQ Accordion Interaction Logic
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const btn = item.querySelector('.faq-question');
+            btn.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all other open items for a clean UI
+                faqItems.forEach(faq => {
+                    faq.classList.remove('active');
+                    faq.querySelector('.faq-answer').style.maxHeight = null;
+                });
+                
+                // Open clicked item if it wasn't already active
+                if (!isActive) {
+                    item.classList.add('active');
+                    const answer = item.querySelector('.faq-answer');
+                    answer.style.maxHeight = answer.scrollHeight + "px";
                 }
-            }
-            render() {
-                drawContext.beginPath();
-                drawContext.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                drawContext.fillStyle = `rgba(90, 87, 82, ${this.luminance})`;
-                drawContext.fill();
-            }
-        }
-
-        for (let idx = 0; idx < 60; idx++) {
-            clusterParticles.push(new VectorNode());
-        }
-
-        function projectProximityLinks() {
-            for (let i = 0; i < clusterParticles.length; i++) {
-                for (let j = i + 1; j < clusterParticles.length; j++) {
-                    const deltaX = clusterParticles[i].x - clusterParticles[j].x;
-                    const deltaY = clusterParticles[i].y - clusterParticles[j].y;
-                    const distanceScalar = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-                    
-                    if (distanceScalar < 140) {
-                        drawContext.beginPath();
-                        drawContext.moveTo(clusterParticles[i].x, clusterParticles[i].y);
-                        drawContext.lineTo(clusterParticles[j].x, clusterParticles[j].y);
-                        drawContext.strokeStyle = `rgba(184, 74, 57, ${0.06 * (1 - distanceScalar / 140)})`;
-                        drawContext.lineWidth = 0.5;
-                        drawContext.stroke();
-                    }
-                }
-            }
-        }
-
-        function executionLoop() {
-            drawContext.clearRect(0, 0, viewW, viewH);
-            clusterParticles.forEach(node => { node.advance(); node.render(); });
-            projectProximityLinks();
-            requestAnimationFrame(executionLoop);
-        }
-        executionLoop();
+            });
+        });
 
         // 4. Form Validation & Conversion Logic connecting to Google Apps Script
         function executeUIFormConversion() {
@@ -1096,12 +1211,10 @@
                 context: context || "N/A",
                 submittedAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
             };
-
-			//Deployment ID - AKfycbwJ9mM0cXT18BLV6BghAkZK-a8mP9PkAqGK3ucuEFpL8OtwVLkL9x9H4q1zy86f2Upl
-
+            
             // YOUR GOOGLE SCRIPT URL HERE
             const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJ9mM0cXT18BLV6BghAkZK-a8mP9PkAqGK3ucuEFpL8OtwVLkL9x9H4q1zy86f2Upl/exec';
-
+            
             // Send payload securely
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
