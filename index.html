@@ -292,7 +292,7 @@
             font-family: var(--font-serif);
             font-weight: 700;
             font-size: 1.65rem;
-            color: var(--accent);
+            color: var(--text);
             letter-spacing: -0.01em;
             display: inline;
             margin: 0 0.2rem;
@@ -586,6 +586,7 @@
             text-transform: uppercase;
         }
 
+        /* Standard Input Styling */
         .form-group input,
         .form-group select,
         .form-group textarea {
@@ -614,6 +615,47 @@
         .form-group textarea {
             resize: none;
             height: 75px;
+        }
+
+        /* Specific Wrapper for +91 Phone Fields */
+        .phone-wrapper {
+            display: flex;
+            align-items: center;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            transition: border-color 0.2s ease;
+            overflow: hidden;
+        }
+
+        .phone-wrapper:focus-within {
+            border-color: rgba(184, 74, 57, 0.4);
+        }
+
+        .phone-wrapper .prefix {
+            padding-left: 1rem;
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            user-select: none;
+            font-weight: 500;
+        }
+
+        .phone-wrapper input {
+            border: none !important;
+            padding-left: 0.5rem !important;
+            width: 100%;
+        }
+
+        /* Form Error Display */
+        .error-message {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
         }
 
         .form-submit {
@@ -668,6 +710,9 @@
             .method-header h2, .includes-header h2 { font-size: 2.2rem; }
             .contact-marketing h2 { font-size: 2.2rem; }
             .admission-form { padding: 1.75rem; }
+            
+            /* Allow buttons to naturally stack full width on small phones */
+            .contact-marketing .btn { width: 100% !important; justify-content: center; }
         }
     </style>
 </head>
@@ -698,7 +743,7 @@
             <h1>JEE Physics taught the way it should be.</h1>
             
             <div class="narrative-block">
-                <p>Structured Online Coaching for JEE Physics led directly by a <span class="inline-h2">99+ percentiler</span>.</p>
+                <p>Structured Online Coaching for JEE Physics led directly by a <span class="inline-h2">99+ percentiler</span></p>
                 <p>At Physicsbit, we focus on developing the student's ability to think and approach a problem - which most coaching centres fail to do. Experience it by booking a free demo class or contact us to learn more.</p>
             </div>
 
@@ -842,14 +887,17 @@
                 <div class="admission-form">
                     <h3>Admission Enquiry Form</h3>
                     <div id="form-interactive-shell">
+                        
+                        <input type="text" id="frm-honey" style="display:none" tabindex="-1" autocomplete="off">
+
                         <div class="form-row">
                             <div class="form-group">
-                                <label>Student Name</label>
-                                <input type="text" placeholder="Full name">
+                                <label for="frm-name">Student Name *</label>
+                                <input type="text" id="frm-name" autocomplete="name" placeholder="Full name">
                             </div>
                             <div class="form-group">
-                                <label>Target Class Track</label>
-                                <select>
+                                <label for="frm-track">Target Class Track *</label>
+                                <select id="frm-track">
                                     <option value="">Select current track</option>
                                     <option>Class 11 (Foundation)</option>
                                     <option>Class 12 (Mains + Advanced)</option>
@@ -859,21 +907,37 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label>Student Phone Number (Optional)</label>
-                                <input type="tel" placeholder="+91 XXXXX XXXXX">
+                                <label for="frm-student-phone">Student Phone (Optional)</label>
+                                <div class="phone-wrapper">
+                                    <span class="prefix">+91</span>
+                                    <input type="tel" id="frm-student-phone" autocomplete="tel" placeholder="10-digit number" maxlength="10">
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label>Parent Contact Number</label>
-                                <input type="tel" placeholder="+91 XXXXX XXXXX">
+                                <label for="frm-parent-phone">Parent Phone *</label>
+                                <div class="phone-wrapper">
+                                    <span class="prefix">+91</span>
+                                    <input type="tel" id="frm-parent-phone" autocomplete="tel" placeholder="10-digit number" maxlength="10">
+                                </div>
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label>Context Details / Struggles</label>
-                            <textarea placeholder="Tell us about specific target areas or previous physics performance metrics..."></textarea>
+                            <label for="frm-email">Email Address (Optional)</label>
+                            <input type="email" id="frm-email" autocomplete="email" placeholder="For calendar invite">
                         </div>
-                        <button class="btn btn-primary form-submit" onclick="executeUIFormConversion()">Request Demo Class</button>
+
+                        <div class="form-group">
+                            <label for="frm-context">Context Details / Struggles (Optional)</label>
+                            <textarea id="frm-context" placeholder="Tell us about specific target areas or previous physics performance metrics..."></textarea>
+                        </div>
+                        
+                        <div class="error-message" id="form-error-alert"></div>
+                        
+                        <button id="submit-btn" class="btn btn-primary form-submit" onclick="executeUIFormConversion()">Request Demo Class</button>
                         <p class="form-note">Confirmation coordinates will route over WhatsApp within 24 operational hours.</p>
                     </div>
+                    
                     <div class="success-msg" id="form-success-alert">
                         ✓ Transmission Secured!<br>
                         <span style="font-size:0.95rem; font-family:var(--font-sans); color:var(--muted); display:block; margin-top:0.5rem; font-style:normal;">We will contact you on Whatsapp shortly.</span>
@@ -984,10 +1048,85 @@
         }
         executionLoop();
 
-        // 4. Form Transition Functional Logic
+        // 4. Form Validation & Conversion Logic connecting to Google Apps Script
         function executeUIFormConversion() {
-            document.getElementById('form-interactive-shell').style.display = 'none';
-            document.getElementById('form-success-alert').style.display = 'block';
+            // Check for bot interference
+            const honey = document.getElementById('frm-honey').value;
+            if (honey !== "") return; // Silently fail
+
+            // Retrieve field values
+            const name = document.getElementById('frm-name').value.trim();
+            const track = document.getElementById('frm-track').value;
+            const parentPhone = document.getElementById('frm-parent-phone').value.trim();
+            const studentPhone = document.getElementById('frm-student-phone').value.trim();
+            const email = document.getElementById('frm-email').value.trim();
+            const context = document.getElementById('frm-context').value.trim();
+            
+            const errorDisplay = document.getElementById('form-error-alert');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            const phoneRegex = /^\d{10}$/; 
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            // Validate required fields
+            if (!name) return showError("Please enter the student's name.");
+            if (!track) return showError("Please select a Target Class Track.");
+            if (!parentPhone) return showError("Please enter a Parent Contact Number.");
+            if (!phoneRegex.test(parentPhone)) return showError("Please enter a valid 10-digit Parent Contact Number.");
+            
+            // Validate optional fields if provided
+            if (studentPhone !== "" && !phoneRegex.test(studentPhone)) return showError("Please enter a valid 10-digit Student Phone Number.");
+            if (email !== "" && !emailRegex.test(email)) return showError("Please enter a valid email address.");
+
+            // Clear errors
+            errorDisplay.style.display = 'none';
+
+            // Visual Processing UX
+            submitBtn.innerText = "Processing...";
+            submitBtn.style.opacity = "0.7";
+            submitBtn.style.pointerEvents = "none";
+
+            // Compile Data Object
+            const formData = {
+                name: name,
+                track: track,
+                parentPhone: "'+91 " + parentPhone,
+                studentPhone: studentPhone ? "'+91 " + studentPhone : "N/A",
+                email: email || "N/A",
+                context: context || "N/A",
+                submittedAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+            };
+
+			//Deployment ID - AKfycbwJ9mM0cXT18BLV6BghAkZK-a8mP9PkAqGK3ucuEFpL8OtwVLkL9x9H4q1zy86f2Upl
+
+            // YOUR GOOGLE SCRIPT URL HERE
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJ9mM0cXT18BLV6BghAkZK-a8mP9PkAqGK3ucuEFpL8OtwVLkL9x9H4q1zy86f2Upl/exec';
+
+            // Send payload securely
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(() => {
+                document.getElementById('form-interactive-shell').style.display = 'none';
+                document.getElementById('form-success-alert').style.display = 'block';
+            })
+            .catch(error => {
+                showError("Failed to send. Please check your connection.");
+                submitBtn.innerText = "Request Demo Class";
+                submitBtn.style.opacity = "1";
+                submitBtn.style.pointerEvents = "auto";
+            });
+        }
+
+        function showError(message) {
+            const errorDisplay = document.getElementById('form-error-alert');
+            errorDisplay.innerText = message;
+            errorDisplay.style.display = 'block';
         }
     </script>
 </body>
