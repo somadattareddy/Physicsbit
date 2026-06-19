@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PhysicsBit — JEE Physics by a 99%ile Scorer</title>
+    <meta name="description" content="Crack JEE Physics with a 99+ Percentiler's 3-Step Framework. Live, 1-on-1 mentorship and small batch online coaching for JEE Mains & Advanced.">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XEGNMNRDGQ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-XEGNMNRDGQ');
+      gtag('config', 'AW-18206557494');
     </script>
-	<meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -1048,7 +1049,6 @@
                 <div class="admission-form">
                     <h3>Admission Enquiry Form</h3>
                     <div id="form-interactive-shell">
-                        
                         <input type="text" id="frm-honey" style="display:none" tabindex="-1" autocomplete="off">
 
                         <div class="form-row">
@@ -1066,42 +1066,24 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="frm-student-phone">Student Phone (Optional)</label>
-                                <div class="phone-wrapper">
-                                    <span class="prefix">+91</span>
-                                    <input type="tel" id="frm-student-phone" autocomplete="tel" placeholder="10-digit number" maxlength="10">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="frm-parent-phone">Parent Phone *</label>
-                                <div class="phone-wrapper">
-                                    <span class="prefix">+91</span>
-                                    <input type="tel" id="frm-parent-phone" autocomplete="tel" placeholder="10-digit number" maxlength="10">
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="form-group">
-                            <label for="frm-email">Email Address (Optional)</label>
-                            <input type="email" id="frm-email" autocomplete="email" placeholder="For calendar invite">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="frm-context">Context Details / Struggles (Optional)</label>
-                            <textarea id="frm-context" placeholder="Tell us about specific target areas or previous physics performance metrics..."></textarea>
+                            <label for="frm-parent-phone">Parent WhatsApp Number *</label>
+                            <div class="phone-wrapper">
+                                <span class="prefix">+91</span>
+                                <input type="tel" id="frm-parent-phone" autocomplete="tel" placeholder="10-digit number" maxlength="10">
+                            </div>
                         </div>
                         
                         <div class="error-message" id="form-error-alert"></div>
                         
                         <button id="submit-btn" class="btn btn-primary form-submit" onclick="executeUIFormConversion()">Request Demo Class</button>
-                        <p class="form-note">Confirmation coordinates will route over WhatsApp within 24 operational hours.</p>
+                        <p class="form-note">We will contact you via WhatsApp to schedule the demo.</p>
                     </div>
                     
                     <div class="success-msg" id="form-success-alert">
-                        ✓ Transmission Secured!<br>
-                        <span style="font-size:0.95rem; font-family:var(--font-sans); color:var(--muted); display:block; margin-top:0.5rem; font-style:normal;">We will contact you on Whatsapp shortly.</span>
+                        ✓ Request Received!<br>
+                        <span style="font-size:0.95rem; font-family:var(--font-sans); color:var(--muted); display:block; margin-top:0.5rem; font-style:normal;">Thank you! We will reach out on WhatsApp shortly to confirm your demo class slot.</span>
                     </div>
                 </div>
             </div>
@@ -1173,25 +1155,17 @@
             const name = document.getElementById('frm-name').value.trim();
             const track = document.getElementById('frm-track').value;
             const parentPhone = document.getElementById('frm-parent-phone').value.trim();
-            const studentPhone = document.getElementById('frm-student-phone').value.trim();
-            const email = document.getElementById('frm-email').value.trim();
-            const context = document.getElementById('frm-context').value.trim();
             
             const errorDisplay = document.getElementById('form-error-alert');
             const submitBtn = document.getElementById('submit-btn');
             
             const phoneRegex = /^\d{10}$/; 
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             
             // Validate required fields
             if (!name) return showError("Please enter the student's name.");
             if (!track) return showError("Please select a Target Class Track.");
             if (!parentPhone) return showError("Please enter a Parent Contact Number.");
             if (!phoneRegex.test(parentPhone)) return showError("Please enter a valid 10-digit Parent Contact Number.");
-            
-            // Validate optional fields if provided
-            if (studentPhone !== "" && !phoneRegex.test(studentPhone)) return showError("Please enter a valid 10-digit Student Phone Number.");
-            if (email !== "" && !emailRegex.test(email)) return showError("Please enter a valid email address.");
 
             // Clear errors
             errorDisplay.style.display = 'none';
@@ -1206,9 +1180,9 @@
                 name: name,
                 track: track,
                 parentPhone: "'+91 " + parentPhone,
-                studentPhone: studentPhone ? "'+91 " + studentPhone : "N/A",
-                email: email || "N/A",
-                context: context || "N/A",
+                studentPhone: "N/A",
+                email: "N/A",
+                context: "N/A",
                 submittedAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
             };
             
@@ -1227,6 +1201,10 @@
             .then(() => {
                 document.getElementById('form-interactive-shell').style.display = 'none';
                 document.getElementById('form-success-alert').style.display = 'block';
+                
+                if (typeof gtag === 'function') {
+                    gtag('event', 'demo_form_submitted');
+                }
             })
             .catch(error => {
                 showError("Failed to send. Please check your connection.");
